@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru-RU">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+	
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@mojs/core" async></script> -->
+	<!-- <script charset="UTF-8" src="//cdn.sendpulse.com/js/push/c195c6b5498d7c35b3934c3f0c37b2da_1.js" async></script> -->
+
+	<!-- EDITOR -->
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest" async></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest" async></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest" async></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest" async></script>
+	<script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest" async></script>
+
+	<script src="https://raw.githubusercontent.com/joewalnes/reconnecting-websocket/master/reconnecting-websocket.min.js" async></script>
+
+	%sapper.base%
+	
+	<link rel="manifest" href="/manifest.json">
+	<link rel='stylesheet' href='fonts/Acrom.css' async>
+	<link rel='stylesheet' href='bundle.css' async>
+
+	<style>
+		* {
+			font-family: 'Acrom';
+		}
+	</style>
+
+	<!-- Sapper generates a <style> tag containing critical CSS
+	     for the current page. CSS for the rest of the app is
+	     lazily loaded when it precaches secondary pages -->
+	%sapper.styles%
+
+	<!-- This contains the contents of the <svelte:head> component, if
+	     the current page has one -->
+	%sapper.head%
+</head>
+<body>
+	<!-- The application will be rendered inside this element,
+	     because `src/client.js` references it -->
+	<div id='sapper'>%sapper.html%</div>
+
+	<!-- Sapper creates a <script> tag containing `src/client.js`
+	     and anything else it needs to hydrate the app and
+	     initialise the router -->
+	%sapper.scripts%
+
+	<style>
+		/* width */
+		::-webkit-scrollbar {
+			width: 6px;
+		}
+		
+		/* Track */
+		/* ::-webkit-scrollbar-track { */
+			/* box-shadow: inset 0 0 5px grey; */
+			/* border-radius: 10px; */
+		/* } */
+		
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background: #D2D2D7;
+			border-radius: 10px;
+		}
+	</style>
+</body>
+</html>

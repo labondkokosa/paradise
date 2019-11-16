@@ -1,0 +1,9 @@
+{
+  "name": "paradise",
+  "scope": "wavees-group",
+  "version": 2,
+    "builds": [
+      { "src": "package.json", "use": "now-sapper" }
+    ],
+  "routes": [{ "src": "/(.*)", "dest": "__sapper__/build/server/server.js" }]
+}
