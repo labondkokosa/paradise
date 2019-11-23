@@ -32,41 +32,41 @@
 		number: -1
 	};
 
-	onMount(async () => {
-		
-		function websocket() {
-			console.log('[PARADISE DEV] Connecting to websocket server...');
-			let socket = new WebSocket("wss://paradise-ws-api.glitch.me/");
+	onMount(() => {
+		status.loaded = true;
 
-			socket.addEventListener('open', function(event) {
-				status.updatable = true;
-			});
+		// function websocket() {
+		// 	console.log('[PARADISE DEV] Connecting to websocket server...');
+		// 	let socket = new WebSocket("wss://paradise-ws-api.glitch.me/");
 
-			socket.addEventListener('message', function (event) {
-				try {
-					let data = JSON.parse(event.data);
-					status.loaded = true;
-					status.number = data.status;
-				}
-				catch(error) {
-					if (error) console.log(error);
-				}
-			});
+		// 	socket.addEventListener('open', function(event) {
+		// 		status.updatable = true;
+		// 	});
+
+		// 	socket.addEventListener('message', function (event) {
+		// 		try {
+		// 			let data = JSON.parse(event.data);
+		// 			status.number = data.status;
+		// 		}
+		// 		catch(error) {
+		// 			if (error) console.log(error);
+		// 		}
+		// 	});
 			
-			socket.addEventListener('close', function (event) {
-				status.updatable = false;
+		// 	socket.addEventListener('close', function (event) {
+		// 		status.updatable = false;
 
-				console.log('[PARADISE DEV] Trying to reconnect to websocket server...');
-				setTimeout(() => {websocket()}, 1000);
-			});
-		}
+		// 		console.log('[PARADISE DEV] Trying to reconnect to websocket server...');
+		// 		setTimeout(() => {websocket()}, 1000);
+		// 	});
+		// }
 
-		websocket();
+		// websocket();
 	})
 </script>
 
 <main>
-	<div style="width: 100%; height: 100vh;">
+	<div style="width: 100%; height: 100vh; overflow-x: hidden; overflow-y: hidden;">
 		<!-- 
 			SPINNER (LOADER)
 		 -->
@@ -74,60 +74,63 @@
 			<div style="width: 100%; height: 100vh; z-index: 2;" class="absolute bg-white flex flex-col justify-center items-center">
 				<Spinner />
 			</div>
-		{ :else }
-			<!-- <#HEADER> -->
-			<div style="z-index: 1;" class="p-6 lg:p-4 shadow-xl w-full bg-white flex justify-center items-center relative">
-				<div class="absolute inset-y-0 left-0 flex items-center ml-12">
-					<a href="/">
-						<Logo />
-					</a>
-
-					<span style="font-size: 0.8em;" class="ml-6 px-4 py-2">
-						{ #if status.number == -1 }
-							<p>❓ ...{status.updatable ? "" : "~"}</p>
-						{ :else if status.number == 0 }
-							<p>❌ Выключено{status.updatable ? "" : "~"}</p>
-						{ :else if status.number == 1 }
-							<p>⭕ Подготовка{status.updatable ? "" : "~"}</p>
-						{ :else if status.number == 2 }
-							<p>🥳 Работает{status.updatable ? "" : "~"}</p>
-						{ /if }
-
-					</span>
-				</div>
-				<div>
-					<div id="list" class="hidden lg:flex items-center">
-						<style>
-							#list a {
-								font-size: 0.8em;
-								margin: 0px 16px;
-							}
-
-							#list svg {
-								width: 18px;
-							}
-						</style>
-						<a href="/universe">
-							Описание вселенной
-						</a>
-					</div>
-				</div>
-				<div class="absolute inset-y-0 right-0 flex items-center mr-12">
-					<button class="mx-6" on:click>
-						<img src="icons/moon.svg" alt="Change color scheme" />
-					</button>
-					<a href="https://discord.gg/fcMVANk">
-						<img src="icons/chat.svg" alt="Our Discord Server">
-					</a>
-				</div>
-			</div>
-			<!-- </HEADER> -->
-
-			<!-- <#MAIN CONTENT> -->
-			<div style="width: 100%; height: 100vh;" class="absolute top-auto left-0 mt-16 flex items-center md:top-0 md:mt-0">
-				<slot></slot>
-			</div>
-			<!-- </MAIN CONTENT> -->
 		{ /if }
+		<!-- <#HEADER> -->
+		<div style="z-index: 1;" class="p-6 lg:p-4 shadow-xl w-full bg-white flex justify-center items-center relative">
+			<div class="absolute inset-y-0 left-0 flex items-center ml-12">
+				<a href="/">
+					<Logo />
+				</a>
+
+				<span style="font-size: 0.8em;" class="ml-6 px-4 py-2">
+					{ #if status.number == -1 }
+						<p>❓ ...{status.updatable ? "" : "~"}</p>
+					{ :else if status.number == 0 }
+						<p>❌ Выключено{status.updatable ? "" : "~"}</p>
+					{ :else if status.number == 1 }
+						<p>⭕ Подготовка{status.updatable ? "" : "~"}</p>
+					{ :else if status.number == 2 }
+						<p>🥳 Работает{status.updatable ? "" : "~"}</p>
+					{ /if }
+				</span>
+
+			</div>
+			<div>
+				<div id="list" class="hidden lg:flex items-center">
+					<style>
+						#list a {
+							font-size: 0.8em;
+							margin: 0px 16px;
+						}
+
+						#list svg {
+							width: 18px;
+						}
+					</style>
+					<a href="/universe">
+						Описание вселенной
+					</a>
+
+					<a href="/rules">
+						Правила
+					</a>
+				</div>
+			</div>
+			<div class="absolute inset-y-0 right-0 flex items-center mr-12">
+				<button class="mx-6" on:click>
+					<img src="icons/moon.svg" alt="Change color scheme" />
+				</button>
+				<a href="https://discord.gg/fcMVANk">
+					<img src="icons/chat.svg" alt="Our Discord Server">
+				</a>
+			</div>
+		</div>
+		<!-- </HEADER> -->
+
+		<!-- <#MAIN CONTENT> -->
+		<div style="width: 100%; height: 100vh;" class="absolute top-auto left-0 mt-16 flex items-center md:top-0 md:mt-0">
+			<slot></slot>
+		</div>
+		<!-- </MAIN CONTENT> -->
 	</div>
 </main>

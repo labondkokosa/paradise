@@ -1,11 +1,11 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "paradise",
+  "description": "Paradise Application (Website for minecraft server)",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
-    "build": "npx tailwind build static/global.css -o static/bundle.css && sapper build --legacy",
-    "export": "npx tailwind build static/global.css -o static/bundle.css && sapper export --legacy",
+    "build": "npx tailwind build static/global.css -o static/bundle.css && sapper build",
+    "export": "npx tailwind build static/global.css -o static/bundle.css && sapper export",
     "start": "node __sapper__/build",
     "tailwind:build": "npx tailwind build static/global.css -o static/bundle.css",
     "cy:run": "cypress run",

@@ -5,7 +5,7 @@
 	const dev = process.env.NODE_ENV === 'development';
 </script>
 
-<style>
+<!-- <style>
 	h1, p {
 		margin: 0 auto;
 	}
@@ -25,15 +25,16 @@
 			font-size: 4em;
 		}
 	}
-</style>
+</style> -->
 
 <svelte:head>
 	<title>{status}</title>
 </svelte:head>
 
-<h1>{status}</h1>
-
-<p>{error.message}</p>
+<div style="width:100%; height: 100vh;" class="flex flex-col justify-center items-center">
+	<h1 class="font-bold text-2xl">{status}</h1>
+	<p>{error.message}</p>
+</div>
 
 {#if dev && error.stack}
 	<pre>{error.stack}</pre>
