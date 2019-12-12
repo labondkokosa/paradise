@@ -27,6 +27,11 @@
     <section>
       <h1 class="text-2xl w-full text-center">Основные правила</h1>
 
+      <!-- Поиск -->
+      <div>
+        <input type="text">
+      </div>
+
       { #each rules as entry }
         <div class="max-w-sm rounded overflow-hidden shadow-lg my-12">
           <div class="px-6 py-4">
