@@ -76,22 +76,45 @@
   <div class="px-12 mt-12 relative">
     <!-- Берём список всех пользователей... -->
 
-    <div class="pt-6 px-4 flex absolute inset-x-0 top-0">
-      <a class="flex" href="/dashboard/{state.user}">
+    <div class="pt-6 flex absolute inset-x-0 top-0 justify-center items-center">
+      <a class="px-4 pt-6 items-center flex absolute inset-y-0 left-0" href="/dashboard/{state.user}">
         <img src="icons/arrow-left.svg" alt="Arrow Left">
         <span class="ml-2">Назад</span>
       </a>
+
+      <div class="flex">
+        <a href="/dashboard/users" class="flex mx-6">
+          <img src="icons/plus.svg" alt="Add user button">
+          <span class="px-2">Добавить жителя</span>
+        </a>
+      </div>
     </div>
 
-    <div class="pt-16">
+    <div class="pt-16 flex">
 
       { #each users as user }
 
-        <div class="p-6 bg-red-500">
-          USER: {user.username}
-          Loyalty: {user.loyalty}
-          discord: {user.discord}
-          id: {user._id}
+        <div class="flex-grow mx-6 py-4 relative flex shadow rounded hover:shadow-lg items-center">
+          
+          <div class="ml-12 flex items-center">
+            <img style="width: 40px; height: 40px;" src="https://minotar.net/avatar/{user.username}/40" alt="user avatar">
+            <span class="ml-4">
+              <p class="text-xl">{user.username}</p>
+              <p class="text-sm text-gray-700">Лояльность: {user.loyalty}</p>
+            </span>
+          </div>
+
+          <div class="flex absolute inset-y-0 right-0 h-full items-center pr-12">
+            <!-- EDIT BUTTON -->
+            <a class="mx-6" href="/dashboard/users">
+              <img src="icons/edit-3.svg" alt="Edit button">
+            </a>
+
+            <!-- DELETE BUTTON -->
+            <a href="/dashboard/users">
+              <img src="icons/trash-2.svg" alt="Delete button">
+            </a>
+          </div>
         </div>
 
       { /each }

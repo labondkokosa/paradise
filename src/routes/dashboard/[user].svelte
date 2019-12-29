@@ -2,65 +2,57 @@
   <title>Paradise Client Dashboard</title>
 </svelte:head>
 
+<script context="module">
+	export async function preload({ params, query }) {
+		// the `slug` parameter is available because
+		// this file is called [slug].svelte
+		const res = await this.fetch(`/dashboard/api/services`);
+		const data = await res.json();
+		if (res.status === 200) {
+			return { services: data };
+		} else {
+			this.error(res.status, data.message);
+		}
+	}
+</script>
+
+<script>
+  import Spinner from "../../components/Spinner.svelte";
+
+  export let services;
+</script>
+
 <div class="w-full h-full pt-20">
   <div style="overflow-x: scroll; overflow-y: hidden; height: 35%;" class="w-full md:my-6 relative">
 
-    <div style="width: 200%;" class="absolute flex justify-center items-center">
+    <div style="width: {100 + (services.size * 10)}%;" class="absolute flex justify-center items-center">
       <div class="hover:shadow-xl rounded-lg w-3/12 px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
         <img class="mb-4" style="width: 54px;" src="icons/plus-math.png" alt="Add service">
         Добавить сервис
+        <p class="text-sm text-gray-700">Кол-во работающих сервисов: {services.size}</p>
       </div>
 
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/people.png" alt="Civilian Archive Logo">
-        Список жителей
-        <p class="text-gray-700 text-sm">А вот тут вы сможете найти список всех жителей.</p>
+      { #each services.list as service }
+
+        <div class="relative mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
+          <img style="width: 45px;" src="icons/{service.icon}" alt="Service Logo">
+          {service.name}
+          <p class="text-gray-700 text-sm">{service.description}</p>
       
-        <a class="text-base" href="/dashboard/users">Перейти</a>
-      </div>
+          <!-- Иконка загрузки -->
+          <div style="width: 100%; height: 100%; z-index: 2; background-color:rgba(0, 0, 0, 0.3);" class="rounded-lg spinner hidden absolute flex flex-col justify-center items-center">
+            <Spinner />
+          </div>
+          <!-- / -->
 
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/police-badge.png" alt="Police Archive Logo">
-        Полицейский Архив
-        <p class="text-gray-700 text-sm">Тут вы можете найти всех преступников!</p>
-      
-        <a class="text-base" href="/dashboard/police">Перейти</a>
-      </div>
+          <a on:click={(event) => {
+            let node = event.target.parentNode;
+            let spinner = node.getElementsByClassName("spinner");
+            spinner[0].classList.remove("hidden");
+          }} class="text-base" href="/dashboard/{service.link}">Перейти</a>
+        </div>
 
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/new-contact.png" alt="Passport Archive">
-        Паспорта
-        <p class="text-gray-700 text-sm">Паспорта, паспорта и ещё раз паспорта!</p>
-      
-        <a class="text-base" href="/dashboard/passport">Перейти</a>
-      </div>
-
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/cloud.png" alt="Project cloud">
-        Проекты
-        <p class="text-gray-700 text-sm">Архив всех исходных кодов наших проектов.</p>
-      
-        <a class="text-base" href="/dashboard/cloud">Перейти</a>
-      </div>
-
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/cloud.png" alt="Project cloud">
-        Скоро...
-        <p class="text-gray-700 text-sm">Тут скоро что-то будет... Надеемся на это, господа</p>
-    
-      </div>
-
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/cloud.png" alt="Project cloud">
-        Скоро...
-        <p class="text-gray-700 text-sm">Тут тоже что-то будет</p>
-      </div>
-
-      <div class="mx-6 rounded-lg w-3/12 shadow hover:shadow-xl px-6 py-4 flex flex-col justify-center text-center items-center text-xl">
-        <img style="width: 45px;" src="icons/cloud.png" alt="Project cloud">
-        Скоро...
-        <p class="text-gray-700 text-sm">И тут да</p>
-      </div>
+      { /each }
     </div>
   </div>
 </div>
