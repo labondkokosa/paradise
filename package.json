@@ -22,7 +22,7 @@
     "mc-server-status": "^1.2.0",
     "minecraft-server-util": "^1.0.2",
     "nedb": "^1.8.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "now-sapper": "^0.35.0",
     "polka": "next",
     "sirv": "^0.4.0",
